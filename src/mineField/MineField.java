@@ -4,6 +4,11 @@ package mineField;
 Edit History:
 Anthony Kieu: 3/11 Created MineField class, create a constructor that populates a grid with mines, also
                created a few basic fields like tileWidth, tileHeight, percentMined, mineField (array), and playerX/Y
+Mohammed Ansari: Implemented following methods:
+                    - move(dx,dy)
+                    - getPlayerX()
+                    - getPlayerY()
+                    - isGameOver()
  */
 import mvc.*;
 
@@ -75,12 +80,12 @@ public class MineField extends Model{
         mineField[0][0].setTraversed(true);
     }
 
-    public int move(int x,int y) throws Exception{
+    public int move(int dx,int dy) throws Exception{
 
         if (gameOver) {throw new IllegalStateException("Game is over. Start a new game.");}
 
-        int newX = playerX + x;
-        int newY = playerY + y;
+        int newX = playerX + dx;
+        int newY = playerY + dy;
 
         if (newX < 0 || newX >= tileWidth || newY < 0 || newY >= tileHeight) {
             System.out.println("Invalid move: Out of bounds");
