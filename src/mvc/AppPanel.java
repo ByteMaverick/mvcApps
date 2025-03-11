@@ -2,11 +2,14 @@ package mvc;
 /*
 Edits:
 Anthony Kieu: 3/6 created file
+
+Mohammed Ansari: Completed the AppPanel Constructor, and the action performed method
  */
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
 
 // AppPanel is the MVC controller
 public class AppPanel extends JPanel implements Subscriber, ActionListener  {
@@ -19,9 +22,21 @@ public class AppPanel extends JPanel implements Subscriber, ActionListener  {
     public static int FRAME_WIDTH = 500;
     public static int FRAME_HEIGHT = 300;
 
+
+    // Done by Mohammed
     public AppPanel(AppFactory factory) {
 
         // initialize fields here
+        this.factory = factory;
+        this.model = factory.makeModel();
+        this.view = factory.makeView(model);
+
+        model.subscribe(this);
+
+        this.setLayout(new BorderLayout());
+        this.add(view, BorderLayout.CENTER);
+
+
 
         frame = new SafeFrame();
         Container cp = frame.getContentPane();
@@ -29,7 +44,12 @@ public class AppPanel extends JPanel implements Subscriber, ActionListener  {
         frame.setJMenuBar(createMenuBar());
         frame.setTitle(factory.getTitle());
         frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+
+        controlPanel = new JPanel();
+        cp.add(controlPanel, BorderLayout.WEST);
+
     }
+
 
     public void display() { frame.setVisible(true); }
 
@@ -88,8 +108,15 @@ public class AppPanel extends JPanel implements Subscriber, ActionListener  {
                 Utilities.inform(factory.about());
             } else if (cmmd.equals("Help")) {
                 Utilities.inform(factory.getHelp());
-            } else { // must be from Edit menu
-                //???
+            } else {
+                //  Else block done by Mohammed
+                Command command = factory.makeEditCommand(model, cmmd);
+                if (command != null) {
+                    command.execute();
+                } else {
+                    throw new Exception("Unknown command: " + cmmd);
+                }
+
             }
         } catch (Exception e) {
             handleException(e);

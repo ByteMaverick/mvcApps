@@ -1,8 +1,15 @@
 package mvc;
-/*
-Edits:
-Anthony Kieu: 3/6 created file
- */
 
-public class Command {
+/*Edits:
+
+Mohammed Ansari: Implemented the abstract class Command
+ */
+public abstract class Command {
+    protected Model model;
+
+    public Command(Model model) {
+        this.model = model;
+    }
+
+    public abstract void execute() throws Exception;
 }
