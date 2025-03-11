@@ -1,4 +1,5 @@
-package stopLight;
+package stoplight;
+
 
 import java.awt.*;
 import javax.swing.*;
@@ -22,4 +23,3 @@ public class StoplightPanel extends AppPanel {
     }
 
 }
-

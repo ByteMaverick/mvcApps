@@ -12,4 +12,5 @@ public class ChangeCommand extends Command {
         Stoplight light = (Stoplight)model;
         light.change();
     }
+
 }

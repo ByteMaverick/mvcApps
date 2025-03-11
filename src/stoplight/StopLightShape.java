@@ -1,9 +1,8 @@
-package stopLight;
-
+package stoplight;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
-public class StoplightShape {
+public class StopLightShape {
     private Stoplight light;
     private int height, width, xc, yc;
     private Ellipse2D.Double redLight, yellowLight, greenLight;

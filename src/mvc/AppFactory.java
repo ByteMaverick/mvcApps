@@ -19,5 +19,5 @@ public interface AppFactory {
 
     public String[] getEditCommands();
 
-    public Command makeEditCommand(Model model, String type);
+    public Command makeEditCommand(Model model, String type,Object source);
 }
