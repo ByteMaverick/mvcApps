@@ -4,6 +4,7 @@ Edits:
 Anthony Kieu: 3/6 created file
 
 Mohammed Ansari: Completed the AppPanel Constructor, and the action performed method
+Anthony Kieu: 3/11, changed the format to grid layout
  */
 
 import java.awt.*;
@@ -33,10 +34,10 @@ public class AppPanel extends JPanel implements Subscriber, ActionListener  {
 
         model.subscribe(this);
 
-        this.setLayout(new BorderLayout());
-        this.add(view, BorderLayout.CENTER);
-
-
+        this.setLayout(new GridLayout(1,2));
+        controlPanel = new JPanel();
+        this.add(controlPanel);
+        this.add(view);
 
         frame = new SafeFrame();
         Container cp = frame.getContentPane();
@@ -44,10 +45,6 @@ public class AppPanel extends JPanel implements Subscriber, ActionListener  {
         frame.setJMenuBar(createMenuBar());
         frame.setTitle(factory.getTitle());
         frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-
-        controlPanel = new JPanel();
-        cp.add(controlPanel, BorderLayout.WEST);
-
     }
 
 
