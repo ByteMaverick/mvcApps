@@ -1,3 +1,4 @@
+
 package mineField;
 /*
 Edit History:
@@ -6,6 +7,7 @@ Anthony Kieu: 3/11 Created MineField class, create a constructor that populates 
  */
 import mvc.*;
 
+
 public class MineField extends Model{
     public static int tileWidth = 20;
     public static int tileHeight = 20;
@@ -13,6 +15,7 @@ public class MineField extends Model{
     private Tile[][] mineField;
     private int playerX;
     private int playerY;
+    private boolean gameOver = false;
 
     public MineField() {
         //need to: 1) create a minefield
@@ -72,13 +75,51 @@ public class MineField extends Model{
         mineField[0][0].setTraversed(true);
     }
 
-    public void test() { //testing method, delete after
+    public int move(int x,int y) throws Exception{
+
+        if (gameOver) {throw new IllegalStateException("Game is over. Start a new game.");}
+
+        int newX = playerX + x;
+        int newY = playerY + y;
+
+        if (newX < 0 || newX >= tileWidth || newY < 0 || newY >= tileHeight) {
+            System.out.println("Invalid move: Out of bounds");
+            throw  new IndexOutOfBoundsException("Invalid move: Out of bounds");
+        }
+        playerX = newX;
+        playerY = newY;
+        if(playerX == tileWidth-1 && playerY == tileHeight -1){
+            gameOver = true;
+            throw new Exception("Congratulations! You reached the goal.");
+        }
+        if(mineField[playerX][playerY].getHasMine()){
+            gameOver = true;
+            throw  new RuntimeException("Boom! you hit a mine");
+        }
+        mineField[playerX][playerY].setTraversed(true);
+        //System.out.println("nearby: " +mineField[playerX][playerY].getNearbyMines());
+        changed();  // Notify observers that state has changed
+        return mineField[playerX][playerY].getNearbyMines();
+
+
+    }
+
+    public int getPlayerX() { return playerX; }
+    public int getPlayerY() { return playerY; }
+    public boolean isGameOver() { return gameOver; }
+
+    public void test() { // Display the minefield in a readable format
         for (int i = 0; i < mineField.length; i++) {
             for (int j = 0; j < mineField[i].length; j++) {
-                System.out.println(mineField[i][j]);
+                if (mineField[i][j].getHasMine()) {
+                    System.out.print(" * ");
+                } else {
+                    System.out.print(" " + mineField[i][j].getNearbyMines() + " ");
+                }
             }
+            System.out.println();
         }
     }
 
-
 }
+
