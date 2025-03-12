@@ -36,7 +36,7 @@ public class AppPanel extends JPanel implements Subscriber, ActionListener  {
 
         this.setLayout(new GridLayout(1,2));
         controlPanel = new JPanel();
-        this.add(controlPanel);
+        this.add(controlPanel, BorderLayout.WEST);
         this.add(view);
 
         frame = new SafeFrame();
