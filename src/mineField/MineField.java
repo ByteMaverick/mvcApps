@@ -78,6 +78,7 @@ public class MineField extends Model{
         }
         //set the first tile as already traversed
         mineField[0][0].setTraversed(true);
+        changed();
     }
 
     public int move(int dx,int dy) throws Exception{
@@ -105,8 +106,6 @@ public class MineField extends Model{
         //System.out.println("nearby: " +mineField[playerX][playerY].getNearbyMines());
         changed();  // Notify observers that state has changed
         return mineField[playerX][playerY].getNearbyMines();
-
-
     }
 
     public int getPlayerX() { return playerX; }
