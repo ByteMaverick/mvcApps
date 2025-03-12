@@ -42,7 +42,7 @@ public class MineField extends Model{
         while (mines > 0) {
             int randomX = Utilities.rng.nextInt(tileWidth);
             int randomY = Utilities.rng.nextInt(tileHeight);
-            if (!mineField[randomX][randomY].getHasMine()){
+            if (!mineField[randomX][randomY].getHasMine() && !(randomX == tileWidth-1 && randomY == tileHeight-1)) {
                 mineField[randomX][randomY].setHasMine(true);
                 mines--;
             }
