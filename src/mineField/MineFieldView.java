@@ -8,14 +8,30 @@ initialize MineField model. Included player position rendering and logging for g
 import mvc.View;
 import mvc.Model;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class MineFieldView extends View {
-
-    private int tileSize = 20; // Each tile is 20x20 pixels
+    private JLabel[][] tileLabels;
 
     public MineFieldView(Model model) {
         super(model);
+        this.setLayout(new GridLayout(MineField.TILE_WIDTH, MineField.TILE_HEIGHT));
+        tileLabels = new JLabel[MineField.TILE_WIDTH][MineField.TILE_HEIGHT];
+
+        MineField mineField = (MineField) model;
+
+        for (int i = 0; i < MineField.TILE_WIDTH; i++) {
+            for (int j = 0; j < MineField.TILE_HEIGHT; j++) {
+                JLabel mineLabel = new JLabel("?");
+                mineLabel.setFont(new Font("Arial", Font.BOLD, 14));
+                mineLabel.setForeground(Color.BLUE);
+                mineLabel.setHorizontalAlignment(JLabel.CENTER);
+                tileLabels[i][j] = mineLabel;
+                this.add(mineLabel);
+            }
+        }
+
         initView();
     }
 
@@ -33,44 +49,18 @@ public class MineFieldView extends View {
             throw new IllegalArgumentException("Model must be an instance of MineField");
         }
 
-        System.out.println("Initializing MineFieldView with grid size: "
-                + mineField.getWidth() + "x" + mineField.getHeight());
-    }
-
-    // Renders the minefield grid, mines, and player
-    @Override
-    public void paintComponent(Graphics gc) {
-        super.paintComponent(gc);
-
-        if (!(model instanceof MineField)) {
-            return;
-        }
-
-        MineField mineField = (MineField) model;
-        int width = mineField.getWidth();
-        int height = mineField.getHeight();
-
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                // Draw the tile
-                gc.setColor(Color.LIGHT_GRAY);
-                gc.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
-                gc.setColor(Color.BLACK);
-                gc.drawRect(i * tileSize, j * tileSize, tileSize, tileSize);
-
-                // Draw a mine if present
-                if (mineField.isMineAt(i, j)) {
-                    gc.setColor(Color.RED);
-                    gc.fillOval(i * tileSize + 5, j * tileSize + 5, tileSize - 10, tileSize - 10);
+        for (int i = 0; i < MineField.TILE_WIDTH; i++) {
+            for (int j = 0; j < MineField.TILE_HEIGHT; j++) {
+                if (mineField.getTile(i, j).getTraversed()) {
+                    tileLabels[i][j].setText("" + mineField.getTile(i, j).getNearbyMines());
+                } else {
+                    tileLabels[i][j].setText("?");
                 }
             }
         }
+    }
 
-        // Draw player
-        Point playerPos = mineField.getPlayerPosition();
-        if (playerPos != null) {
-            gc.setColor(Color.BLUE);
-            gc.fillRect(playerPos.x * tileSize + 2, playerPos.y * tileSize + 2, tileSize - 4, tileSize - 4);
-        }
+    public void update() {
+        initView();
     }
 }

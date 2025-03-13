@@ -18,8 +18,8 @@ import mvc.*;
 import java.awt.*;
 
 public class MineField extends Model {
-    public static int tileWidth = 20;
-    public static int tileHeight = 20;
+    public static int TILE_WIDTH = 20;
+    public static int TILE_HEIGHT = 20;
     public static int percentMined = 5;
     private Tile[][] mineField;
     private int playerX;
@@ -28,7 +28,7 @@ public class MineField extends Model {
 
     public MineField() {
         // Create a minefield
-        mineField = new Tile[tileWidth][tileHeight];
+        mineField = new Tile[TILE_WIDTH][TILE_HEIGHT];
         this.playerX = 0;
         this.playerY = 0;
 
@@ -43,11 +43,11 @@ public class MineField extends Model {
 
         // Randomly distribute the mines across the field
         double decimalMined = (double) percentMined / 100;
-        int mines = (int) Math.ceil(decimalMined * tileWidth * tileHeight);
+        int mines = (int) Math.ceil(decimalMined * TILE_WIDTH * TILE_HEIGHT);
         while (mines > 0) {
-            int randomX = Utilities.rng.nextInt(tileWidth);
-            int randomY = Utilities.rng.nextInt(tileHeight);
-            if (!mineField[randomX][randomY].getHasMine() && !(randomX == tileWidth - 1 && randomY == tileHeight - 1)) {
+            int randomX = Utilities.rng.nextInt(TILE_WIDTH);
+            int randomY = Utilities.rng.nextInt(TILE_HEIGHT);
+            if (!mineField[randomX][randomY].getHasMine() && !(randomX == TILE_WIDTH - 1 && randomY == TILE_HEIGHT - 1)) {
                 mineField[randomX][randomY].setHasMine(true);
                 mines--;
             }
@@ -71,7 +71,7 @@ public class MineField extends Model {
                 for (int[] direction : directions) {
                     int tempX = i + direction[0];
                     int tempY = j + direction[1];
-                    if (tempX >= 0 && tempX < tileWidth && tempY >= 0 && tempY < tileHeight) {
+                    if (tempX >= 0 && tempX < TILE_WIDTH && tempY >= 0 && tempY < TILE_HEIGHT) {
                         if (mineField[tempX][tempY].getHasMine()) {
                             tempNearby++;
                         }
@@ -96,14 +96,14 @@ public class MineField extends Model {
         int newX = playerX + dx;
         int newY = playerY + dy;
 
-        if (newX < 0 || newX >= tileWidth || newY < 0 || newY >= tileHeight) {
+        if (newX < 0 || newX >= TILE_WIDTH || newY < 0 || newY >= TILE_HEIGHT) {
             System.out.println("Invalid move: Out of bounds");
             throw new IndexOutOfBoundsException("Invalid move: Out of bounds");
         }
         playerX = newX;
         playerY = newY;
 
-        if (playerX == tileWidth - 1 && playerY == tileHeight - 1) {
+        if (playerX == TILE_WIDTH - 1 && playerY == TILE_HEIGHT - 1) {
             gameOver = true;
             throw new Exception("Congratulations! You reached the goal.");
         }
@@ -118,17 +118,12 @@ public class MineField extends Model {
         return mineField[playerX][playerY].getNearbyMines();
     }
 
-    // Missing methods
-    public int getWidth() {
-        return tileWidth;
-    }
-
-    public int getHeight() {
-        return tileHeight;
+    public Tile getTile(int x, int y) {
+        return mineField[x][y];
     }
 
     public boolean isMineAt(int x, int y) {
-        if (x < 0 || x >= tileWidth || y < 0 || y >= tileHeight) {
+        if (x < 0 || x >= TILE_WIDTH || y < 0 || y >= TILE_HEIGHT) {
             throw new IndexOutOfBoundsException("Coordinates out of bounds");
         }
         return mineField[x][y].getHasMine();
