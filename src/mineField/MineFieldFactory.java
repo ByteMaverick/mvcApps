@@ -71,6 +71,5 @@ public class MineFieldFactory implements AppFactory {
 
         }
 
-
     }
 }

@@ -10,15 +10,14 @@ import javax.swing.*;
 /*
 Edits:
 Mohammed Ansari: Implemented the entire AppPanel
-
-To do:
-Fix the layout of the panel.
+Anthony Kieu 3/12: fixed the grid layout.
+             3/13: switched NW and NE button so it'd look nicer
  */
 public class MineFieldPanel extends AppPanel {
     public MineFieldPanel(AppFactory factory) {
         super(factory);
 
-        String[] buttons = {"N", "E", "W", "S", "NE", "NW", "SW","SE"};
+        String[] buttons = {"N", "S", "E", "W", "NW", "NE", "SW","SE"};
 
         controlPanel.setLayout(new GridLayout(4,2));
 

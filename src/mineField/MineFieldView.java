@@ -4,11 +4,13 @@ package mineField;
 Akanksha Bodkhe: 3/11 created MineFieldView to implement rendering of grid, mines, and player, added
 tile size handling and proper drawing logic. Refined setModel() and initView() to validate and
 initialize MineField model. Included player position rendering and logging for grid dimensions.
+Anthony Kieu: 3/12 and 3/13, fixed implementation to include JLabels for dynamic text display
         */
 import mvc.View;
 import mvc.Model;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 
 public class MineFieldView extends View {
@@ -21,13 +23,17 @@ public class MineFieldView extends View {
 
         MineField mineField = (MineField) model;
 
+        Border blackline = BorderFactory.createLineBorder(Color.black);
         for (int i = 0; i < MineField.TILE_WIDTH; i++) {
             for (int j = 0; j < MineField.TILE_HEIGHT; j++) {
                 JLabel mineLabel = new JLabel("?");
                 mineLabel.setFont(new Font("Arial", Font.BOLD, 14));
-                mineLabel.setForeground(Color.BLUE);
+                mineLabel.setForeground(Color.BLACK);
+                mineLabel.setOpaque(true);
+                mineLabel.setBackground(Color.GRAY);
                 mineLabel.setHorizontalAlignment(JLabel.CENTER);
-                tileLabels[i][j] = mineLabel;
+                mineLabel.setBorder(blackline);
+                tileLabels[j][i] = mineLabel;
                 this.add(mineLabel);
             }
         }
@@ -49,9 +55,16 @@ public class MineFieldView extends View {
             throw new IllegalArgumentException("Model must be an instance of MineField");
         }
 
+        Border whiteline = BorderFactory.createLineBorder(Color.WHITE);
+        Border redline = BorderFactory.createLineBorder(Color.BLUE);
         for (int i = 0; i < MineField.TILE_WIDTH; i++) {
             for (int j = 0; j < MineField.TILE_HEIGHT; j++) {
                 if (mineField.getTile(i, j).getTraversed()) {
+                    if (mineField.getPlayerX() == i && mineField.getPlayerY() == j) {
+                        tileLabels[i][j].setBorder(redline);
+                    } else {
+                        tileLabels[i][j].setBorder(whiteline);
+                    }
                     tileLabels[i][j].setText("" + mineField.getTile(i, j).getNearbyMines());
                 } else {
                     tileLabels[i][j].setText("?");

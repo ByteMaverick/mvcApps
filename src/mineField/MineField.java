@@ -11,6 +11,7 @@ Mohammed Ansari: Implemented following methods:
 Akanksha Bodkhe: 3/11 added missing methods in MineField class including getWidth(), getHeight(),
 isMineAt(), and getPlayerPositioan(). These methods were implemented to provide access to grid
 dimensions, mine status, and player position for the MineFieldView class.
+Anthony Kieu: 3/13 minor edit to move changed() before the last two exceptions are thrown within the move() method
  */
 
 import mvc.*;
@@ -18,6 +19,7 @@ import mvc.*;
 import java.awt.*;
 
 public class MineField extends Model {
+    private static final long serialVersionUID = 1L;
     public static int TILE_WIDTH = 20;
     public static int TILE_HEIGHT = 20;
     public static int percentMined = 5;
@@ -47,7 +49,7 @@ public class MineField extends Model {
         while (mines > 0) {
             int randomX = Utilities.rng.nextInt(TILE_WIDTH);
             int randomY = Utilities.rng.nextInt(TILE_HEIGHT);
-            if (!mineField[randomX][randomY].getHasMine() && !(randomX == TILE_WIDTH - 1 && randomY == TILE_HEIGHT - 1)) {
+            if (!mineField[randomX][randomY].getHasMine() && !(randomX == TILE_WIDTH - 1 && randomY == TILE_HEIGHT - 1) && !(randomX == 0 && randomY == 0)) {
                 mineField[randomX][randomY].setHasMine(true);
                 mines--;
             }
@@ -88,7 +90,7 @@ public class MineField extends Model {
         changed();
     }
 
-    public int move(int dx, int dy) throws Exception {
+    public void move(int dx, int dy) throws Exception {
         if (gameOver) {
             throw new IllegalStateException("Game is over. Start a new game.");
         }
@@ -103,6 +105,9 @@ public class MineField extends Model {
         playerX = newX;
         playerY = newY;
 
+        mineField[playerX][playerY].setTraversed(true);
+        changed(); //changed first so the player can see they stepped on the mine, before the exception throws
+
         if (playerX == TILE_WIDTH - 1 && playerY == TILE_HEIGHT - 1) {
             gameOver = true;
             throw new Exception("Congratulations! You reached the goal.");
@@ -112,10 +117,6 @@ public class MineField extends Model {
             gameOver = true;
             throw new RuntimeException("Boom! You hit a mine");
         }
-
-        mineField[playerX][playerY].setTraversed(true);
-        changed(); // Notify observers that state has changed
-        return mineField[playerX][playerY].getNearbyMines();
     }
 
     public Tile getTile(int x, int y) {
@@ -129,20 +130,12 @@ public class MineField extends Model {
         return mineField[x][y].getHasMine();
     }
 
-    public Point getPlayerPosition() {
-        return new Point(playerX, playerY);
-    }
-
     public int getPlayerX() {
         return playerX;
     }
 
     public int getPlayerY() {
         return playerY;
-    }
-
-    public boolean isGameOver() {
-        return gameOver;
     }
 
     public void test() { // Display the minefield in a readable format
