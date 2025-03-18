@@ -30,10 +30,5 @@ public class MineFieldPanel extends AppPanel {
         }
     }
 
-    public static void main(String[] args) {
-        AppFactory factory = new MineFieldFactory();
-        AppPanel panel = new MineFieldPanel(factory);
-        panel.display();
-    }
 
 }
