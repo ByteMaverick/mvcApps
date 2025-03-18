@@ -21,9 +21,6 @@ public class MineFieldView extends View {
         this.setLayout(new GridLayout(MineField.TILE_WIDTH, MineField.TILE_HEIGHT));
         tileLabels = new JLabel[MineField.TILE_WIDTH][MineField.TILE_HEIGHT];
 
-        MineField mineField = (MineField) model;
-
-        Border blackline = BorderFactory.createLineBorder(Color.black);
         for (int i = 0; i < MineField.TILE_WIDTH; i++) {
             for (int j = 0; j < MineField.TILE_HEIGHT; j++) {
                 JLabel mineLabel = new JLabel("?");
@@ -32,12 +29,10 @@ public class MineFieldView extends View {
                 mineLabel.setOpaque(true);
                 mineLabel.setBackground(Color.GRAY);
                 mineLabel.setHorizontalAlignment(JLabel.CENTER);
-                mineLabel.setBorder(blackline);
                 tileLabels[j][i] = mineLabel;
                 this.add(mineLabel);
             }
         }
-
         initView();
     }
 
@@ -56,18 +51,21 @@ public class MineFieldView extends View {
         }
 
         Border whiteline = BorderFactory.createLineBorder(Color.WHITE);
-        Border redline = BorderFactory.createLineBorder(Color.BLUE);
+        Border blueline = BorderFactory.createLineBorder(Color.BLUE);
+        Border blackline = BorderFactory.createLineBorder(Color.black);
+
         for (int i = 0; i < MineField.TILE_WIDTH; i++) {
             for (int j = 0; j < MineField.TILE_HEIGHT; j++) {
                 if (mineField.getTile(i, j).getTraversed()) {
                     if (mineField.getPlayerX() == i && mineField.getPlayerY() == j) {
-                        tileLabels[i][j].setBorder(redline);
+                        tileLabels[i][j].setBorder(blueline);
                     } else {
                         tileLabels[i][j].setBorder(whiteline);
                     }
                     tileLabels[i][j].setText("" + mineField.getTile(i, j).getNearbyMines());
                 } else {
                     tileLabels[i][j].setText("?");
+                    tileLabels[i][j].setBorder(blackline);
                 }
             }
         }

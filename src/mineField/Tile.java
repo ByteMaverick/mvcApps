@@ -4,12 +4,14 @@ Edit History:
 Anthony Kieu: 3/11 create Tile class to help the model
  */
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class Tile {
+public class Tile implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int[] coordinates;
-    private boolean hasMine = false;
-    private boolean traversed = false;
+    private boolean hasMine;
+    private boolean traversed;
     private int nearbyMines = 0;
 
     public Tile() {
@@ -19,6 +21,8 @@ public class Tile {
     public void setCoordinates(int x, int y) {
         this.coordinates[0] = x;
         this.coordinates[1] = y;
+        this.hasMine = false;
+        this.traversed = false;
     }
 
     public int[] getCoordinates() {

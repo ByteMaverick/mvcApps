@@ -28,7 +28,6 @@ public class MineFieldPanel extends AppPanel {
             button.addActionListener(this);
             controlPanel.add(buttonPanel);
         }
-
     }
 
     public static void main(String[] args) {
