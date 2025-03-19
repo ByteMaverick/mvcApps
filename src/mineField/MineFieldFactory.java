@@ -13,7 +13,6 @@ public class MineFieldFactory implements AppFactory {
     }
 
     public View makeView(Model model) {
-        //please put view in when done making class
         return  new MineFieldView((MineField) model);
     }
 
@@ -48,7 +47,6 @@ public class MineFieldFactory implements AppFactory {
     public Command makeEditCommand(Model model, String type,Object source) {
         MoveCommand moveCommand = null;
         switch (type) {
-            //please implement this after done with MoveCommand
             case "N":
                 return new MoveCommand((MineField) model, Heading.N);
             case "S":
