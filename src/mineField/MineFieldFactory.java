@@ -3,7 +3,7 @@ package mineField;
 Edit History:
 Anthony Kieu: 3/11 created MineFieldFactory, implemented all methods except for makeView and makeEditCommands, pending completion
 
-Mohammed Ansari: Implemented makeView(), and makeEditCommand()
+Mohammed Ansari 3/11: Implemented makeView(), and makeEditCommand()
  */
 import mvc.*;
 

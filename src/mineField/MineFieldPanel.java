@@ -9,7 +9,7 @@ import javax.swing.*;
 
 /*
 Edits:
-Mohammed Ansari: Implemented the entire AppPanel
+Mohammed Ansari 3/12: Implemented the entire AppPanel
 Anthony Kieu 3/12: fixed the grid layout.
              3/13: switched NW and NE button so it'd look nicer
  */

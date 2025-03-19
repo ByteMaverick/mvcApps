@@ -3,7 +3,7 @@ package mineField;
 Edit History:
 Anthony Kieu: 3/11 Created MineField class, created a constructor that populates a grid with mines, also
                created a few basic fields like tileWidth, tileHeight, percentMined, mineField (array), and playerX/Y
-Mohammed Ansari: Implemented following methods:
+Mohammed Ansari 3/11: Implemented following methods:
                     - move(dx,dy)
                     - getPlayerX()
                     - getPlayerY()

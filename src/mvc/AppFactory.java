@@ -3,7 +3,7 @@ package mvc;
 Edits:
 Anthony Kieu: 3/6 created file
 
-Mohammed Ansari: Implemented the entire AppFactory interface
+Mohammed Ansari 3/10: Implemented the entire AppFactory interface
  */
 
 public interface AppFactory {

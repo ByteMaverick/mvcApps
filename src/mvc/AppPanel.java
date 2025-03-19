@@ -3,7 +3,7 @@ package mvc;
 Edits:
 Anthony Kieu: 3/6 created file
 
-Mohammed Ansari: Completed the AppPanel Constructor, and the action performed method
+Mohammed Ansari 3/10: Completed the AppPanel Constructor, and the action performed method
 Anthony Kieu: 3/11, changed the format to grid layout
  */
 
