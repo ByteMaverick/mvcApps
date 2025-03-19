@@ -99,7 +99,6 @@ public class MineField extends Model {
         int newY = playerY + dy;
 
         if (newX < 0 || newX >= TILE_WIDTH || newY < 0 || newY >= TILE_HEIGHT) {
-            System.out.println("Invalid move: Out of bounds");
             throw new IndexOutOfBoundsException("Invalid move: Out of bounds");
         }
         playerX = newX;
@@ -123,31 +122,11 @@ public class MineField extends Model {
         return mineField[x][y];
     }
 
-    public boolean isMineAt(int x, int y) {
-        if (x < 0 || x >= TILE_WIDTH || y < 0 || y >= TILE_HEIGHT) {
-            throw new IndexOutOfBoundsException("Coordinates out of bounds");
-        }
-        return mineField[x][y].getHasMine();
-    }
-
     public int getPlayerX() {
         return playerX;
     }
 
     public int getPlayerY() {
         return playerY;
-    }
-
-    public void test() { // Display the minefield in a readable format
-        for (int i = 0; i < mineField.length; i++) {
-            for (int j = 0; j < mineField[i].length; j++) {
-                if (mineField[i][j].getHasMine()) {
-                    System.out.print(" * ");
-                } else {
-                    System.out.print(" " + mineField[i][j].getNearbyMines() + " ");
-                }
-            }
-            System.out.println();
-        }
     }
 }
